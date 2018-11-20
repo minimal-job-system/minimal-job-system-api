@@ -66,9 +66,10 @@ class JobParameterDeclaration(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=255, blank=False)
-    description = models.CharField(max_length=1024, blank=False)
+    description = models.CharField(max_length=3072, blank=False)
     type = models.IntegerField(choices=PARAMETER_TYPE_CHOICES, blank=False)
     default = models.CharField(max_length=255, blank=False)
+    hint = models.CharField(max_length=255, null=True)
     # The following fields may contain dynamic expressions
     # which are evaluated during runtime
     is_hidden = models.CharField(max_length=255, blank=False, default="False")
@@ -127,7 +128,7 @@ class JobParameter(models.Model):
     )
     name = models.CharField(max_length=255, blank=False)
     type = models.IntegerField(choices=PARAMETER_TYPE_CHOICES, blank=False)
-    value = models.CharField(max_length=255, blank=False)
+    value = models.CharField(max_length=1024, blank=False)
 
     def clean(self):
         super(JobParameter, self).clean()

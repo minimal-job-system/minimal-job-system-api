@@ -45,7 +45,7 @@ class Tool():
 
 class PrintJobSourcesTool(Tool):
     name = "Print job sources"
-    icon = "unchecked"
+    icon = "console"
     description = "Print selected job sources"
 
     def tool(self, request):
@@ -60,7 +60,7 @@ class PrintJobSourcesTool(Tool):
 
 class SyncJobSourcesTool(Tool):
     name = "Synchronize job sources"
-    icon = "unchecked"
+    icon = "refresh"
     description = "Synchronize selected job sources"
 
     def tool(self, request):
@@ -200,6 +200,7 @@ def sync_job_source(job_source):
                             parameter["annotations"].get("default") or
                             parameter["default"]
                         ),
+                        hint=(parameter["annotations"].get("hint")),
                         is_hidden=(
                             parameter["annotations"].get("is_hidden") or False
                         ),

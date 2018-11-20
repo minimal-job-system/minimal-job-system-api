@@ -42,7 +42,7 @@ class JobParameterDeclarationSerializer(serializers.ModelSerializer):
         """Meta class to map serializer's fields with the model fields."""
         model = JobParameterDeclaration
         fields = (
-            'id', 'name', 'description', 'type', 'default',
+            'id', 'name', 'description', 'type', 'default', 'hint',
             'is_hidden', 'is_dangerous', 'choices'
         )
 
