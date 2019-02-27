@@ -1,5 +1,6 @@
 from dateutil.parser import parse
 from decimal import Decimal, InvalidOperation
+import hashlib
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -112,6 +113,17 @@ class Job(models.Model):
     owner = models.CharField(max_length=255, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+
+    def __hash__(self):
+        """
+        progress is not 
+        """
+        return int(
+            hashlib.md5(''.join([
+                str(self.id), self.date_modified.isoformat()
+            ]).encode('utf-8')).hexdigest(),
+            16
+        )
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
