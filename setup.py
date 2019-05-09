@@ -36,8 +36,8 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'django>=2.0.8',
-        'django-filter==1.1.0',
+        'django>=2.0.13',
+        'django-filter==2.1.0',
         'djangorestframework==3.7.7',
         'six==1.11.0'
     ]
