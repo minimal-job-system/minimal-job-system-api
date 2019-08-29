@@ -191,6 +191,12 @@ def sync_job_source(job_source):
                 )
                 job_template.save()
                 for parameter in parameters:
+                    if (
+                        parameter["annotations"].get("is_propagated")
+                        in ['False', 'false', '0', 0]
+                    ):
+                        continue
+
                     job_param_decl = JobParameterDeclaration(
                         template=job_template,
                         name=parameter["name"],
