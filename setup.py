@@ -38,7 +38,7 @@ setup(
     install_requires=[
         'django>=2.0.13',
         'django-filter==2.1.0',
-        'djangorestframework==3.7.7',
+        'djangorestframework==3.9.1',
         'six==1.11.0'
     ]
 )
