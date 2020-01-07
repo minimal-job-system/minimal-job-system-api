@@ -1,13 +1,11 @@
 import abc
 import ast
-from glob import glob
 import os
 import six
 import sys
 
 from django.conf.urls import url
 from django.contrib import messages
-from django.http import HttpResponse
 from django.shortcuts import redirect
 
 from job_system_api.models import JobSource, JobTemplate, \
@@ -95,10 +93,9 @@ def sync_job_source(job_source):
     def error_callback(ex):
         errors.append(ex)
 
-    for root, dirs, files in os.walk(
+    for root, _, files in os.walk(
         job_source.uri, onerror=error_callback, topdown=True
     ):
-        dirs = []  # stop recursion
         for file_name in files:
             file_path = os.path.join(root, file_name)
 
@@ -142,6 +139,7 @@ def sync_job_source(job_source):
                         if (
                             isinstance(assign_node.value, ast.Call) and
                             hasattr(assign_node.value.func, 'value') and
+                            hasattr(assign_node.value.func.value, 'id') and
                             assign_node.value.func.value.id == "luigi"
                         ):
                             parameter = extract_parameter(
@@ -157,7 +155,6 @@ def sync_job_source(job_source):
                             ):
                                 expr_node = child_nodes[idx-1]
                                 if isinstance(expr_node.value, ast.Dict):
-                                    annotations = {}
                                     for k, v in zip(
                                         expr_node.value.keys,
                                         expr_node.value.values
