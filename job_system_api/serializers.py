@@ -49,9 +49,7 @@ class JobParameterDeclarationSerializer(serializers.ModelSerializer):
 
 class JobTemplateSerializer(serializers.ModelSerializer):
     """Serializer to map the Model instance into JSON format."""
-    parameter_declarations = JobParameterDeclarationSerializer(
-        many=True, read_only=True
-    )
+    parameter_declarations = serializers.SerializerMethodField()
 
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
@@ -61,6 +59,14 @@ class JobTemplateSerializer(serializers.ModelSerializer):
             'date_created', 'date_modified', 'parameter_declarations'
         )
         read_only_fields = ('date_created', 'date_modified')
+
+    def get_parameter_declarations(self, instance):
+        parameter_declarations = (
+            instance.parameter_declarations.all().order_by('id')
+        )
+        return JobParameterDeclarationSerializer(
+            parameter_declarations, many=True
+        ).data
 
 
 class JobLogEntrySerializer(serializers.ModelSerializer):
