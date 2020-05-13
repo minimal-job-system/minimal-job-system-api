@@ -140,7 +140,7 @@ class JobParameter(models.Model):
     )
     name = models.CharField(max_length=255, blank=False)
     type = models.IntegerField(choices=PARAMETER_TYPE_CHOICES, blank=False)
-    value = models.CharField(max_length=1024, blank=False)
+    value = models.CharField(max_length=10240, blank=False)
 
     def clean(self):
         super(JobParameter, self).clean()
